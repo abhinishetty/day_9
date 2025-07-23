@@ -1,0 +1,275 @@
+23.07.2025
+
+List:
+function FirstList(){
+    const city=["mangalore","Mysore","Bangalore","Mumbai","Delhi"]
+    return (
+        <div>
+            <h2>City List: </h2>
+            {
+                city.map((c_name)=> //inside retun we cant use ------------ so we use map
+                <p>{c_name}</p>)
+            }
+        </div>
+    )
+}
+
+export default FirstList
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `div`. It was passed a child from FirstList. See https://react.dev/link/warning-keys for more information.
+
+so,
+function FirstList(){
+    const city=["mangalore","Mysore","Bangalore","Mumbai","Delhi"]
+    return (
+        <div>
+            <h2>City List: </h2>
+            {
+                city.map((c_name,c_index)=>
+                <p key={c_index}>{c_name}</p>)
+            }
+        </div>
+    )
+}
+
+export default FirstList
+
+
+so:
+function SecondList(){
+   const students=[
+    {id:111,name:"ABHI",city:"Udupi" },
+    {id:222,name:"Adhi",city:"mangalore" },
+    {id:333,name:"Shri",city:"puttur" },
+    {id:444,name:"Varsha",city:"pune" }
+   ]
+   
+    return (
+        <div>
+<h2>Student List: </h2>
+{
+    students.map((student)=>
+        <p key={student.id}>Name:{student.name} City:{student.city}</p>
+    )
+}
+        </div>
+    )
+}
+export default SecondList
+
+=====================
+//using container
+
+function EmployeeCard({name,city}){
+    return(
+        <div style={{border:'1px solid blue',margin:'5px',padding:'5px'}}>
+           name: {name},City:{city}
+
+        </div>
+    )
+}
+export default EmployeeCard
+
+=
+import EmployeeCard from "./EmployeeCard"
+function EmployeeList(){
+   const employees=[
+    {id:111,name:"ABHI",city:"Udupi" },
+    {id:222,name:"Adhi",city:"mangalore" },
+    {id:333,name:"Shri",city:"puttur" },
+    {id:444,name:"Varsha",city:"pune" }
+   ]
+   
+    return(
+        <div>
+<h2>employee list</h2>
+{
+    employees.map((employee)=>
+   <EmployeeCard key={employee.id} name={employee.name} city={employee.city}/>
+   )
+}
+        </div>
+    )
+}
+export default EmployeeList
+=
+import EmployeeList from "./EmployeeList";
+import FirstList from "./FirstList";
+//import Counter_prop_state from "./Counter_prop_state";
+import FirstEvent from "./FirstEvent";
+import SecondList from "./SecondList";
+function App() {
+  return (
+    <div>
+      
+      <EmployeeList/>
+    </div>
+  );
+}
+
+export default App;
+
+===================================
+List with buttons
+
+CourseList.jsx
+
+import { useState } from "react"
+function CourseList(){
+const[course,setCourse]=useState([
+
+{id:100,name:"JavaScript"},
+{id:200,name:"React"},
+{id:300,name:"Python"},
+{id:400,name:"Java"}
+
+])
+const handleDeleteButton=(id)=>{
+    const newCourse=course.filter((c)=>c.id!==id); //It filters the array to exclude the course with the matching id
+    setCourse(newCourse)
+}
+
+    return(
+        <div>
+<h2> Couse list: </h2>
+{
+    course.map((c)=>(
+        <div key={c.id}>{c.name}
+        <button onClick={()=>handleDeleteButton(c.id)}>Delete</button>
+</div>
+    ))
+}
+        </div>
+    )
+}
+export default CourseList;
+=
+App.jsx
+
+import CourseList from "./CourseList";
+function App() {
+  return (
+    <div>
+      
+      <CourseList/>
+    </div>
+  );
+}
+
+export default App;
+
+=====
+function TableList(){
+const students=[
+    {id:111,name:"ABHI",city:"Udupi" },
+    {id:222,name:"Adhi",city:"mangalore" },
+    {id:333,name:"Shri",city:"puttur" },
+    {id:444,name:"Varsha",city:"pune" }
+   ]
+
+
+    return(
+        <div>
+<h2>Student table :</h2>
+<table border="2" cellPadding="10" cellSpacing="0">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>city</th>
+        </tr>
+    </thead>
+<tbody>
+    {
+        students.map((s)=>(
+            <tr key={s.id}>
+                <td>{s.id}</td>
+                <td>{s.name}</td>
+                <td>{s.city}</td>
+            </tr>
+        )
+        )
+    }
+</tbody>
+</table>
+        </div>
+    )
+}
+export default TableList
+=App.jsx
+import TableList from "./TableList";
+function App() {
+  return (
+    <div>
+      
+      <TableList/>
+    </div>
+  );
+}
+
+export default App;
+Using table //with pre defined value
+======================================================
+
+react-bootstrap
+bootstrap
+
+npm install react-bootstrap bootstrap
+BootStrapTable.jsx
+import Table from 'react-bootstrap/Table';
+function BootStrapTable(){
+    const students=[
+    {id:111,name:"ABHI",city:"Udupi" },
+    {id:222,name:"Adhi",city:"mangalore" },
+    {id:333,name:"Shri",city:"puttur" },
+    {id:444,name:"Varsha",city:"pune" }
+   ]
+  
+return(
+    
+    <div className='container mt-4'>
+        <h2 className='head3'>Student Table</h2>
+        <Table striped bordered hover responsive>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>city</th>
+                </tr>
+            </thead>
+ <tbody>
+    {
+        students.map((s)=>(
+            <tr key={s.id}>
+                <td>{s.id}</td>
+                <td>{s.name}</td>
+                <td>{s.city}</td>
+            </tr>
+        )
+        )
+    }
+</tbody>
+        </Table>
+    </div>
+    
+)
+
+}
+export default BootStrapTable
+
+App.jsx
+
+import BootStrapTable from "./BootStrapTable";
+
+import "bootstrap/dist/css/bootstrap.min.css"
+function App() {
+  return (
+    <div>
+      
+      <BootStrapTable/>
+    </div>
+  );
+}
+
+export default App;
